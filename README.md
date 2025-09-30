@@ -16,7 +16,7 @@ Note: The key remapping does not delete your previous binded key so do beware.
 
 ## **🖥️ Getting Started**
 
-1. Install AutoHotkey v2.
+1. Install AutoHotkey v2. (https://www.autohotkey.com/)
 
 2. Clone this repository or download the .ahk file.
 
