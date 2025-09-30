@@ -12,6 +12,8 @@ Note: The key remapping does not delete your previous binded key so do beware.
 
 🎹 Custom hotkey rebinding (set your own key to toggle clicking).
 
+🛑 Press F3 at any time to immediately stop the clicker.
+
 📌 Always-on-top GUI for convenience.
 
 ## **🖥️ Getting Started**
