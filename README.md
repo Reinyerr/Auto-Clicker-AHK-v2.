@@ -30,11 +30,11 @@ Note: The key remapping does not delete your previous binded key so do beware.
 
 Through this project I learned how to:
 
-Build GUIs with AutoHotkey v2.
+-Build GUIs with AutoHotkey v2.
 
-Work with timers and macros.
+-Work with timers and macros.
 
-Implement dynamic hotkey rebinding. 
+-Implement dynamic hotkey rebinding. 
 
 ## Video Tutorial
 
