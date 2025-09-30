@@ -1,17 +1,16 @@
-﻿#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2.0
 
-; Clicking Loop Variables
+; ------------------- Variables -------------------
 global clickRunning := false
-global defaultHotKey := "F1" ; Default Hotkey
+global defaultHotKey := "F1" ; Default action key
 Hotkey(defaultHotKey, ToggleClicker)
 global clickHotKey := defaultHotKey
-gToggle := ToggleClicker
 
-; Creating GUI for AutoClicker
+; ------------------- GUI -------------------
 MyGui := Gui("+AlwaysOnTop", "AutoClicker Setup")
 MyGui.SetFont("s10")
 
-; Grabbing User Input 
+; Time inputs
 MyGui.Add("Text", "xm w30", "Hours:")
 editHours := MyGui.Add("Edit", "x+5 w40", "0")
 
@@ -24,78 +23,63 @@ editSeconds := MyGui.Add("Edit", "x+5 w40", "0")
 MyGui.Add("Text", "x+5 w30", "Milliseconds:")
 editMS := MyGui.Add("Edit", "x+5 w40", "0")
 
-
-
-; Start/Stop Toggle Button
+; Start/Stop Button
 btnToggle := MyGui.Add("Button", "xm y+20 w100 h30", "Start")
 btnToggle.OnEvent("Click", ToggleClicker)
 
-
 ; Hotkey input
-MyGui.Add("Text", "xm w80", "HotKey: ")
-btnSetHotkey := MyGui.Add("Button", "xm y+5 w80 h25", "Set Hotkey")
+txtHotkey := MyGui.Add("Text", "xm w120", "HotKey: " clickHotKey)
+btnSetHotkey := MyGui.Add("Button", "xm y+5 w100 h25", "Set Hotkey")
 btnSetHotkey.OnEvent("Click", SetCustomHotkey)
 
-
 MyGui.Show()
-; Exiting The Script
+
+; Close GUI = Exit script
 MyGui.OnEvent("Close", (*) => ExitApp())
 MyGui.OnEvent("Escape", (*) => ExitApp())
 
 
-
-;After Start Is Clicked
-ToggleClicker(*)
-{
+; Toggle start/stop from GUI or hotkey
+ToggleClicker(*) {
     global clickRunning, btnToggle
 
-    if(clickRunning)
-    {
-        SetTimer(DoClick, 0)
+    if (clickRunning) {
+        SetTimer(DoClick, "Off")    ; stop
         clickRunning := false
         btnToggle.Text := "Start"
         MsgBox("AutoClicker stopped")
-    }
-    else{
-    totalMS := GetIntervalMS()
-         if(totalMS < 1)
-    {
-        MsgBox("Please enter a valid interval (> 0 ms).")
-        return
-    }
-
-    SetTimer(DoClick, totalMS)
-    clickRunning := true
-    btnToggle.Text := "Stop"
-    MsgBox("AutoClicker starting")
-
+    } else {
+        totalMS := GetIntervalMS()
+        if (totalMS < 1) {
+            MsgBox("Please enter a valid interval (> 0 ms).")
+            return
+        }
+        SetTimer(DoClick, totalMS)  ; start
+        clickRunning := true
+        btnToggle.Text := "Stop"
+        MsgBox("AutoClicker starting")
     }
 }
 
-; Clicks For You
-DoClick()
-{
+; Perform the click
+DoClick() {
     Click
 }
 
-; Determines The Time Between Each Click
-GetIntervalMS()
-{
+; Calculate interval in ms
+GetIntervalMS() {
     global editHours, editMinutes, editSeconds, editMS
     hours := editHours.Value
-    seconds := editSeconds.Value
     minutes := editMinutes.Value
+    seconds := editSeconds.Value
     ms := editMS.Value
 
-    return ((hours * 3600000) + (minutes*60000) + (seconds*1000) + ms)
-
+    return ((hours * 3600000) + (minutes * 60000) + (seconds * 1000) + ms)
 }
 
-
-
-; Setting Custom Hot Key (removes old one first)
+; Custom hotkey mapping
 SetCustomHotkey(*) {
-    global clickHotKey, btnSetHotkey, defaultHotKey
+    global clickHotKey, defaultHotKey, btnSetHotkey, txtHotkey
 
     ih := InputHook("L1 V", "{Enter}")
     ih.Start()
@@ -113,10 +97,24 @@ SetCustomHotkey(*) {
         try Hotkey(clickHotKey)  ; unmap previous custom key
     }
 
-    ; Create new mapping -> send the default key
+    ; Set new mapping -> send the default hotkey
     clickHotKey := newKey
-    btnSetHotkey.Text := "Hotkey: " clickHotKey
     Hotkey(clickHotKey, (*) => Send("{" defaultHotKey "}"))
+
+    ; Update GUI text
+    txtHotkey.Text := "HotKey: " clickHotKey " (→ " defaultHotKey ")"
 }
 
 
+; ------------------- Hotkeys -------------------
+
+; Pause clicker
+F3:: {
+    global clickRunning, btnToggle
+    SetTimer(DoClick, "Off") ; always stop
+    if (clickRunning) {
+        clickRunning := false
+        btnToggle.Text := "Start"
+        MsgBox("AutoClicker paused")
+    }
+}
