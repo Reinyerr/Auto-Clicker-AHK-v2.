@@ -5,18 +5,18 @@ A simple Auto Clicker built with AutoHotkey v2, featuring a GUI for customizable
 
 Note: The key remapping does not delete your previous binded key so do beware.
 
-## **✨ Features**
-⏱️ Adjustable click intervals (hours, minutes, seconds, milliseconds).
+## **Features**
+Adjustable click intervals (hours, minutes, seconds, milliseconds).
 
-🎛️ Start/Stop toggle button with live updates.
+ Start/Stop toggle button with live updates.
 
-🎹 Custom hotkey rebinding (set your own key to toggle clicking).
+ Custom hotkey rebinding (set your own key to toggle clicking).
 
-🛑 Press F3 at any time to immediately stop the clicker.
+ Press F3 at any time to immediately stop the clicker.
 
-📌 Always-on-top GUI for convenience.
+ Always-on-top GUI for convenience.
 
-## **🖥️ Getting Started**
+## **Getting Started**
 
 1. Install AutoHotkey v2. (https://www.autohotkey.com/)
 
@@ -28,7 +28,7 @@ Note: The key remapping does not delete your previous binded key so do beware.
 
 5. Press Start to begin auto-clicking.
 
-## **📚 Learning Outcomes**
+## **Learning Outcomes**
 
 Through this project I learned how to:
 
